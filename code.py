@@ -57,20 +57,20 @@ class Adafruit_CharLCD:
     def __init__(self, pin_rs=24, pin_e=23, pins_db=[17, 18, 27, 22], GPIO = None):
 	# Emulate the old behavior of using RPi.GPIO if we haven't been given
 	# an explicit GPIO interface to use
-	if not GPIO:
-	    import RPi.GPIO as GPIO
-   	self.GPIO = GPIO
-        self.pin_rs = pin_rs
-        self.pin_e = pin_e
-        self.pins_db = pins_db
+        if not GPIO:
+	           import RPi.GPIO as GPIO
+   	           self.GPIO = GPIO
+               self.pin_rs = pin_rs
+               self.pin_e = pin_e
+               self.pins_db = pins_db
 
-        self.GPIO.setwarnings(False)
-        self.GPIO.setmode(GPIO.BCM)
-        self.GPIO.setup(self.pin_e, GPIO.OUT)
-        self.GPIO.setup(self.pin_rs, GPIO.OUT)
+               self.GPIO.setwarnings(False)
+               self.GPIO.setmode(GPIO.BCM)
+               self.GPIO.setup(self.pin_e, GPIO.OUT)
+               self.GPIO.setup(self.pin_rs, GPIO.OUT)
 
-        for pin in self.pins_db:
-            self.GPIO.setup(pin, GPIO.OUT)
+               for pin in self.pins_db:
+                   self.GPIO.setup(pin, GPIO.OUT)
 
 	self.write4bits(0x33) # initialization
 	self.write4bits(0x32) # initialization
@@ -102,7 +102,7 @@ class Adafruit_CharLCD:
 
 	self.write4bits(self.LCD_RETURNHOME) # set cursor position to zero
 	self.delayMicroseconds(3000) # this command takes a long time!
-	
+
 
     def clear(self):
 
@@ -114,13 +114,13 @@ class Adafruit_CharLCD:
 
 	self.row_offsets = [ 0x00, 0x40, 0x14, 0x54 ]
 
-	if ( row > self.numlines ): 
+	if ( row > self.numlines ):
 		row = self.numlines - 1 # we count rows starting w/0
 
 	self.write4bits(self.LCD_SETDDRAMADDR | (col + self.row_offsets[row]))
 
 
-    def noDisplay(self): 
+    def noDisplay(self):
 	""" Turn the display off (quickly) """
 
 	self.displaycontrol &= ~self.LCD_DISPLAYON
@@ -194,7 +194,7 @@ class Adafruit_CharLCD:
 	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
 
 
-    def noAutoscroll(self): 
+    def noAutoscroll(self):
 	""" This will 'left justify' text from the cursor """
 
 	self.displaymode &= ~self.LCD_ENTRYSHIFTINCREMENT
@@ -236,9 +236,9 @@ class Adafruit_CharLCD:
 
     def pulseEnable(self):
 	self.GPIO.output(self.pin_e, False)
-	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be > 450ns 
+	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be > 450ns
 	self.GPIO.output(self.pin_e, True)
-	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be > 450ns 
+	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be > 450ns
 	self.GPIO.output(self.pin_e, False)
 	self.delayMicroseconds(1)		# commands need > 37us to settle
 
