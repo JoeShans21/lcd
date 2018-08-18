@@ -78,7 +78,7 @@ class Adafruit_CharLCD:
 
 
     def clear(self):
-
+        print ("clearing")
         self.write4bits(self.LCD_CLEARDISPLAY) # command to clear display
         self.delayMicroseconds(3000)    # 3000 microsecond sleep, clearing the display takes a long time
 
@@ -217,7 +217,7 @@ class Adafruit_CharLCD:
 
 
     def message(self, text):
-        """ Send string to LCD. Newline wraps to second line"""
+        print("messaging")
 
         for char in text:
             if char == '\n':
