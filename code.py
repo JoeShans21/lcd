@@ -55,20 +55,18 @@ class Adafruit_CharLCD:
 
 
     def __init__(self, pin_rs=24, pin_e=23, pins_db=[17, 18, 27, 22], GPIO = None):
-	# Emulate the old behavior of using RPi.GPIO if we haven't been given
-	# an explicit GPIO interface to use
         if not GPIO:
-	           import RPi.GPIO as GPIO
-               self.GPIO = GPIO
-               self.pin_rs = pin_rs
-               self.pin_e = pin_e
-               self.pins_db = pins_db
-               self.GPIO.setwarnings(False)
-               self.GPIO.setmode(GPIO.BCM)
-               self.GPIO.setup(self.pin_e, GPIO.OUT)
-               self.GPIO.setup(self.pin_rs, GPIO.OUT)
-               for pin in self.pins_db:
-                   self.GPIO.setup(pin, GPIO.OUT)
+            import RPi.GPIO as GPIO
+            self.GPIO = GPIO
+            self.pin_rs = pin_rs
+            self.pin_e = pin_e
+            self.pins_db = pins_db
+            self.GPIO.setwarnings(False)
+            self.GPIO.setmode(GPIO.BCM)
+            self.GPIO.setup(self.pin_e, GPIO.OUT)
+            self.GPIO.setup(self.pin_rs, GPIO.OUT)
+            for pin in self.pins_db:
+                self.GPIO.setup(pin, GPIO.OUT)
 
     self.write4bits(0x33) # initialization
 	self.write4bits(0x32) # initialization
@@ -251,9 +249,9 @@ class Adafruit_CharLCD:
                 self.write4bits(ord(char),True)
 
 def loop():
-	lcd = Adafruit_CharLCD()
-	while True:
-		lcd.clear()
+    lcd = Adafruit_CharLCD()
+    while True:
+        lcd.clear()
 		lcd.message(" LCD 1602 Test \n123456789ABCDEF")
 		sleep(2)
 		lcd.clear()
@@ -264,4 +262,4 @@ def loop():
 		sleep(2)
 
 if __name__ == '__main__':
-	loop()
+    loop()
